@@ -95,6 +95,9 @@ class Configuration implements ConfigurationInterface
         $this->addDistanceMatrixSection($rootNode);
         $this->addDistanceMatrixRequestSection($rootNode);
 
+        // Places autocomplete
+        $this->addPlacesAutocompleteSection($rootNode);
+
         return $treeBuilder;
     }
 
@@ -1183,6 +1186,24 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('travel_mode')->end()
                         ->scalarNode('unit_system')->end()
                         ->booleanNode('sensor')->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+
+    /**
+     * Adds the API section.
+     *
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node The root node.
+     */
+    protected function addPlacesAutocompleteSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('places_autocomplete')->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('api_key')->end()
                     ->end()
                 ->end()
             ->end();

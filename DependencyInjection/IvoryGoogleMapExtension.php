@@ -1436,6 +1436,11 @@ class IvoryGoogleMapExtension extends Extension
      */
     protected function loadPlacesAutocomplete(array $config, ContainerBuilder $container)
     {
+        $builderDefinition = $container->getDefinition('ivory_google_map.places_autocomplete.helper');
+        if (isset($config['places_autocomplete']['api_key'])) {
+            $builderDefinition->addMethodCall('setApiKey', array($config['places_autocomplete']['api_key']));
+        }
+
         $templatingEngines = $container->getParameter('templating.engines');
 
         if (in_array('php', $templatingEngines)) {
